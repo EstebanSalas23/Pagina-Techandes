@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block titulo %}Nuevo cliente{% endblock %}
+
+{% block contenido %}
+<h1>Nuevo cliente</h1>
+<form method="post" class="formulario">
+  <div class="rejilla">
+    <label>Documento
+      <input name="documento" inputmode="numeric" required value="{{ datos.documento }}">
+    </label>
+    <label>Ciudad
+      <select name="ciudad" required>
+        <option value="">Seleccione…</option>
+        {% for c in ciudades %}
+          <option value="{{ c }}" {{ 'selected' if c == datos.ciudad }}>{{ c }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>Nombres
+      <input name="nombres" maxlength="60" required value="{{ datos.nombres }}">
+    </label>
+    <label>Apellidos
+      <input name="apellidos" maxlength="60" required value="{{ datos.apellidos }}">
+    </label>
+    <label>Correo
+      <input name="email" type="email" maxlength="100" required value="{{ datos.email }}">
+    </label>
+    <label>Teléfono
+      <input name="telefono" inputmode="numeric" maxlength="15" value="{{ datos.telefono }}">
+    </label>
+  </div>
+  <div class="botones">
+    <button class="boton" type="submit">Registrar</button>
+    <a class="boton secundario" href="{{ url_for('clientes.lista') }}">Cancelar</a>
+  </div>
+</form>
+{% endblock %}

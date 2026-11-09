@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block titulo %}Error {{ codigo }}{% endblock %}
+
+{% block contenido %}
+<h1>Error {{ codigo }}</h1>
+<p>{{ mensaje }}</p>
+{% if session.get('usuario') %}
+  <p><a class="boton" href="{{ url_for('inicio.inicio') }}">Volver al inicio</a></p>
+{% else %}
+  <p><a class="boton" href="{{ url_for('auth.login') }}">Iniciar sesión</a></p>
+{% endif %}
+{% endblock %}

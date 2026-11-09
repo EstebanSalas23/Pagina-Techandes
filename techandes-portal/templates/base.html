@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block titulo %}Portal{% endblock %} · TechAndes</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+</head>
+<body>
+  {% set usuario = session.get('usuario') %}
+  {% set seccion = request.blueprint %}
+
+  <div class="marco">
+    <header class="banner">
+      <img src="{{ url_for('static', filename='img/banner.svg') }}" alt="TechAndes S.A.S.">
+    </header>
+
+    {% if usuario %}
+    <div class="bienvenida">
+      <span>BIENVENIDO(A), <strong>{{ usuario.nombre }}</strong> · {{ usuario.cargo }}</span>
+      <span class="rol">{{ usuario.rol }}</span>
+      <a href="{{ url_for('auth.logout') }}">Cerrar sesión</a>
+    </div>
+
+    <nav class="menu">
+      <a href="{{ url_for('inicio.inicio') }}" class="{{ 'activo' if seccion == 'inicio' }}">Inicio</a>
+      <a href="{{ url_for('productos.lista') }}" class="{{ 'activo' if seccion == 'productos' }}">Productos</a>
+      <a href="{{ url_for('clientes.lista') }}" class="{{ 'activo' if seccion == 'clientes' }}">Clientes</a>
+      <a href="{{ url_for('ventas.nueva') }}" class="{{ 'activo' if seccion == 'ventas' }}">Nueva venta</a>
+      <a href="{{ url_for('pedidos.lista') }}" class="{{ 'activo' if seccion == 'pedidos' }}">Pedidos</a>
+      {% if usuario.rol == 'ADMIN' %}
+        <a href="{{ url_for('informes.index') }}" class="{{ 'activo' if seccion == 'informes' }}">Informes</a>
+      {% endif %}
+    </nav>
+    {% else %}
+    <div class="bienvenida">
+      <a href="{{ url_for('auth.login') }}">Iniciar sesión</a>
+    </div>
+    {% endif %}
+
+    <main class="contenido">
+      {% with mensajes = get_flashed_messages(with_categories=true) %}
+        {% for categoria, mensaje in mensajes %}
+          <div class="mensaje {{ categoria }}">{{ mensaje }}</div>
+        {% endfor %}
+      {% endwith %}
+
+      {% block contenido %}{% endblock %}
+    </main>
+
+    <footer class="pie">© {{ anio_actual }} TechAndes S.A.S. · Portal interno de ventas</footer>
+  </div>
+</body>
+</html>

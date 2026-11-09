@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block titulo %}Informes{% endblock %}
+
+{% block contenido %}
+<h1>Informes</h1>
+<p class="subtitulo">Ventas efectivas: no incluyen pedidos cancelados.</p>
+
+<section class="panel">
+  <h2>Ventas por categoría</h2>
+  <table>
+    <thead>
+      <tr><th>Categoría</th><th>Participación</th><th class="num">Total</th></tr>
+    </thead>
+    <tbody>
+      {% for f in categorias %}
+      <tr>
+        <td>{{ f.categoria }}</td>
+        <td>
+          <div class="barra-fondo" title="{{ f.porcentaje }} %">
+            <div class="barra" style="width: {{ f.porcentaje }}%"></div>
+          </div>
+          <span class="ayuda">{{ f.porcentaje }} %</span>
+        </td>
+        <td class="num">{{ f.total | pesos }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<section class="panel">
+  <h2>Ranking de vendedores</h2>
+  <table>
+    <thead>
+      <tr><th>Puesto</th><th>Vendedor</th><th>Cargo</th><th class="num">Pedidos</th><th class="num">Total</th></tr>
+    </thead>
+    <tbody>
+      {% for r in vendedores %}
+      <tr>
+        <td>{{ r.puesto }}</td>
+        <td>{{ r.vendedor }}</td>
+        <td>{{ r.cargo }}</td>
+        <td class="num">{{ r.pedidos }}</td>
+        <td class="num">{{ r.total | pesos }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="5" class="vacio">No hay ventas registradas.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<section class="panel">
+  <h2>Top 5 productos por unidades</h2>
+  <table>
+    <thead>
+      <tr><th>#</th><th>Producto</th><th class="num">Unidades</th><th class="num">Total</th></tr>
+    </thead>
+    <tbody>
+      {% for p in top_productos %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ p.nombre }}</td>
+        <td class="num">{{ p.unidades }}</td>
+        <td class="num">{{ p.total | pesos }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="4" class="vacio">No hay unidades vendidas.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<section class="panel">
+  <h2>Clientes sin compras ({{ sin_compras|length }})</h2>
+  <table>
+    <thead>
+      <tr><th>Documento</th><th>Cliente</th><th>Ciudad</th><th>Correo</th></tr>
+    </thead>
+    <tbody>
+      {% for c in sin_compras %}
+      <tr>
+        <td>{{ c.documento }}</td>
+        <td><a href="{{ url_for('clientes.detalle', id_cliente=c.id_cliente) }}">{{ c.nombre }}</a></td>
+        <td>{{ c.ciudad }}</td>
+        <td>{{ c.email }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="4" class="vacio">Todos los clientes tienen al menos un pedido.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

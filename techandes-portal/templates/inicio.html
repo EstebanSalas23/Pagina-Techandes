@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block titulo %}Inicio{% endblock %}
+
+{% block contenido %}
+<h1>Panel principal</h1>
+<p class="subtitulo">Resumen de la operación comercial de TechAndes.</p>
+
+<div class="indicadores">
+  <div class="indicador">
+    <span>Ventas efectivas</span>
+    <strong>{{ indicadores.ventas_totales | pesos }}</strong>
+  </div>
+  <div class="indicador">
+    <span>Pedidos pendientes</span>
+    <strong>{{ indicadores.pendientes }}</strong>
+  </div>
+  <div class="indicador">
+    <span>Clientes registrados</span>
+    <strong>{{ indicadores.clientes }}</strong>
+  </div>
+  <div class="indicador alerta">
+    <span>Productos con stock bajo</span>
+    <strong>{{ indicadores.stock_bajo }}</strong>
+  </div>
+</div>
+
+{% if session.usuario.rol == 'ADMIN' %}
+<section class="panel accesos">
+  <h2>Accesos rápidos</h2>
+  <div class="botones">
+    <a class="boton" href="{{ url_for('informes.index') }}">Ver informes</a>
+    <a class="boton" href="{{ url_for('productos.nuevo') }}">Nuevo producto</a>
+    <a class="boton" href="{{ url_for('ventas.nueva') }}">Registrar una venta</a>
+  </div>
+</section>
+{% else %}
+<section class="panel mis-ventas">
+  <h2>Mis ventas</h2>
+  <p><strong>{{ mis_ventas.pedidos }}</strong> pedidos por <strong>{{ mis_ventas.total | pesos }}</strong></p>
+</section>
+{% endif %}
+
+<div class="paneles">
+  <section class="panel">
+    <h2>Últimos pedidos</h2>
+    <table>
+      <thead>
+        <tr><th>#</th><th>Fecha</th><th>Cliente</th><th class="num">Total</th><th>Estado</th></tr>
+      </thead>
+      <tbody>
+        {% for p in ultimos %}
+        <tr>
+          <td><a href="{{ url_for('pedidos.detalle', id_pedido=p.id_pedido) }}">{{ p.id_pedido }}</a></td>
+          <td>{{ p.fecha_pedido | fecha }}</td>
+          <td>{{ p.cliente }}</td>
+          <td class="num">{{ p.total | pesos }}</td>
+          <td><span class="estado {{ p.estado }}">{{ p.estado }}</span></td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5" class="vacio">Todavía no hay pedidos.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+
+  <section class="panel">
+    <h2>Productos por reabastecer (menos de 10 unidades)</h2>
+    <table>
+      <thead>
+        <tr><th>Producto</th><th class="num">Stock</th></tr>
+      </thead>
+      <tbody>
+        {% for p in bajo_stock %}
+        <tr>
+          <td>{{ p.nombre }}</td>
+          <td class="num">{{ p.stock }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="2" class="vacio">No hay productos con stock bajo.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+</div>
+{% endblock %}

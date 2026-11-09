@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block titulo %}Pedidos{% endblock %}
+
+{% block contenido %}
+<h1>Pedidos</h1>
+<form class="filtros" method="get">
+  <label>Estado
+    <select name="estado">
+      <option value="">Todos</option>
+      {% for e in estados %}
+        <option value="{{ e }}" {{ 'selected' if e == estado }}>{{ e }}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <button class="boton" type="submit">Filtrar</button>
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Fecha</th>
+      <th>Cliente</th>
+      <th>Vendedor</th>
+      <th class="num">Total</th>
+      <th>Estado</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in pedidos %}
+    <tr>
+      <td><a href="{{ url_for('pedidos.detalle', id_pedido=p.id_pedido) }}">{{ p.id_pedido }}</a></td>
+      <td>{{ p.fecha_pedido | fecha(true) }}</td>
+      <td>{{ p.cliente }}</td>
+      <td>{{ p.vendedor }}</td>
+      <td class="num">{{ p.total | pesos }}</td>
+      <td><span class="estado {{ p.estado }}">{{ p.estado }}</span></td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6" class="vacio">No hay pedidos con ese estado.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

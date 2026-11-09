@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block titulo %}{{ titulo }}{% endblock %}
+
+{% block contenido %}
+<h1>{{ titulo }}</h1>
+<form method="post" class="formulario">
+  <label>Nombre
+    <input name="nombre" maxlength="100" required value="{{ datos.nombre }}">
+  </label>
+  <div class="rejilla">
+    <label>Categoría
+      <select name="id_categoria" required>
+        <option value="">Seleccione…</option>
+        {% for c in categorias %}
+          <option value="{{ c.id_categoria }}"
+            {{ 'selected' if c.id_categoria|string == datos.id_categoria|string }}>
+            {{ c.nombre }}
+          </option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>Precio
+      <input name="precio" type="number" min="0.01" step="0.01" required value="{{ datos.precio }}">
+    </label>
+    <label>Stock
+      <input name="stock" type="number" min="0" step="1" required value="{{ datos.stock }}">
+    </label>
+    <label class="check">
+      <input type="checkbox" name="activo" {% if datos.activo %}checked{% endif %}>
+      Activo
+    </label>
+  </div>
+  <div class="botones">
+    <button class="boton" type="submit">Guardar</button>
+    <a class="boton secundario" href="{{ url_for('productos.lista') }}">Cancelar</a>
+  </div>
+</form>
+{% endblock %}

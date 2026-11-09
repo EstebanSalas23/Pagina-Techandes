@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 220" width="1100" height="220" role="img" aria-label="TechAndes S.A.S.">
+  <defs>
+    <linearGradient id="cielo" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a3d30"/>
+      <stop offset="55%" stop-color="#2d6a4f"/>
+      <stop offset="100%" stop-color="#163528"/>
+    </linearGradient>
+    <linearGradient id="logo" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f0c27a"/>
+      <stop offset="100%" stop-color="#c47a3a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1100" height="220" fill="url(#cielo)"/>
+  <g fill="none" stroke="#f0d7a8" stroke-width="1.4" opacity="0.75">
+    <path d="M700 46h90v28h150"/>
+    <path d="M760 78h70v34h120"/>
+    <path d="M820 36h40"/>
+    <path d="M980 74v40h70"/>
+  </g>
+  <g fill="#f6e7c1">
+    <circle cx="700" cy="46" r="3.2"/>
+    <circle cx="790" cy="46" r="3.2"/>
+    <circle cx="940" cy="74" r="3.2"/>
+    <circle cx="830" cy="112" r="3.2"/>
+    <circle cx="980" cy="74" r="3.2"/>
+    <circle cx="1050" cy="114" r="3.2"/>
+  </g>
+  <path d="M0 176 L90 148 L160 168 L250 140 L340 170 L430 150 L520 174 L620 146 L720 172 L820 148 L930 170 L1020 150 L1100 166 L1100 220 L0 220 Z" fill="#0e241c" opacity="0.5"/>
+  <path d="M0 192 L110 170 L190 188 L290 164 L390 190 L490 168 L600 194 L720 166 L840 192 L960 170 L1100 186 L1100 220 L0 220 Z" fill="#1c3a2e"/>
+  <rect x="46" y="34" width="132" height="132" rx="26" fill="url(#logo)"/>
+  <rect x="70" y="58" width="84" height="84" rx="8" fill="none" stroke="#fff8ee" stroke-width="3"/>
+  <path d="M82 118 L98 92 L112 108 L128 74 L142 118 Z" fill="#fff8ee"/>
+  <circle cx="124" cy="78" r="5" fill="#fff3b0"/>
+  <g fill="#1a2e24">
+    <rect x="62" y="70" width="8" height="4" rx="1"/>
+    <rect x="62" y="90" width="8" height="4" rx="1"/>
+    <rect x="62" y="110" width="8" height="4" rx="1"/>
+    <rect x="154" y="70" width="8" height="4" rx="1"/>
+    <rect x="154" y="90" width="8" height="4" rx="1"/>
+    <rect x="154" y="110" width="8" height="4" rx="1"/>
+  </g>
+  <text x="198" y="108" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="52" font-weight="700" letter-spacing="2">TECHANDES</text>
+  <text x="575" y="96" fill="#f6e7c8" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" letter-spacing="1.5">S.A.S.</text>
+  <text x="200" y="142" fill="#f3ddb0" font-family="Segoe UI, Arial, sans-serif" font-size="18">Tecnolog&#237;a que llega a toda Colombia</text>
+</svg>

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block titulo %}Nueva venta{% endblock %}
+
+{% block contenido %}
+<h1>Nueva venta</h1>
+<p class="subtitulo">La venta queda a nombre de {{ session.usuario.nombre }}. El precio lo toma el servidor.</p>
+
+<form method="post" class="formulario">
+  <div class="rejilla">
+    <label>Cliente
+      <select name="id_cliente" required>
+        <option value="">Seleccione…</option>
+        {% for c in clientes %}
+          <option value="{{ c.id_cliente }}" {{ 'selected' if c.id_cliente|string == id_cliente|string }}>
+            {{ c.nombre }} — {{ c.documento }}
+          </option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>Método de pago
+      <select name="metodo_pago" required>
+        <option value="">Seleccione…</option>
+        {% for m in metodos %}
+          <option value="{{ m }}" {{ 'selected' if m == metodo_pago }}>{{ m }}</option>
+        {% endfor %}
+      </select>
+    </label>
+  </div>
+
+  <h2>Productos</h2>
+  <table>
+    <thead>
+      <tr><th>Producto</th><th class="cantidad">Cantidad</th></tr>
+    </thead>
+    <tbody>
+      {% for linea in lineas %}
+      <tr>
+        <td>
+          <select name="producto_{{ loop.index }}">
+            <option value="">—</option>
+            {% for p in productos %}
+              <option value="{{ p.id_producto }}"
+                {{ 'selected' if p.id_producto|string == linea.id_producto|string }}>
+                {{ p.nombre }} — {{ p.precio | pesos }} (stock {{ p.stock }})
+              </option>
+            {% endfor %}
+          </select>
+        </td>
+        <td>
+          <input name="cantidad_{{ loop.index }}" inputmode="numeric" value="{{ linea.cantidad }}">
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <p class="ayuda">Las filas vacías se ignoran. Si elige el mismo producto dos veces, las cantidades se suman.</p>
+  <button class="boton" type="submit">Registrar venta</button>
+</form>
+{% endblock %}
